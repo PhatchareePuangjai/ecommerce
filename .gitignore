@@ -230,3 +230,5 @@ load-test-results/
 # Build artifacts
 build/
 dist/
+
+.codex/ 
