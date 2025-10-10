@@ -95,7 +95,7 @@ Notes
 - Outputs: src/observability/metrics.*; tests/observability/*
 - Dependencies: T007, T010, T011
 
-T017 — Update agent context file
+[X] T017 — Update agent context file
 - Description: Run update script to capture tech choices from plan.
 - Command: `.specify/scripts/bash/update-agent-context.sh codex`
 - Dependencies: T001

@@ -1,0 +1,237 @@
+openapi: 3.0.3
+info:
+  title: CMS API
+  version: 0.1.0
+  description: CMS endpoints for articles, banners, and preview.
+paths:
+  /cms/articles:
+    get:
+      summary: List published articles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ContentPublic'
+    post:
+      summary: Create a draft article
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+  /cms/articles/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    put:
+      summary: Update an article (fields and/or workflow action)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContentUpdate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Content'
+  /cms/banners:
+    get:
+      summary: List visible banners
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BannerPublic'
+    post:
+      summary: Create a banner
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BannerCreate'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Banner'
+  /cms/banners/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+    put:
+      summary: Update a banner
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BannerUpdate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Banner'
+  /cms/preview/{type}/{id}:
+    parameters:
+      - in: path
+        name: type
+        required: true
+        schema:
+          type: string
+          enum: [article, banner]
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - in: header
+        name: x-preview-role
+        required: true
+        schema:
+          type: string
+          enum: [editor, admin]
+    get:
+      summary: Preview draft/review content or banner
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviewResponse'
+        '403':
+          description: Forbidden (missing or invalid preview role)
+
+components:
+  schemas:
+    Schedule:
+      type: object
+      properties:
+        startAt:
+          type: string
+          format: date-time
+        endAt:
+          type: string
+          format: date-time
+          nullable: true
+    Content:
+      type: object
+      properties:
+        id: { type: string }
+        title: { type: string }
+        body: { type: string }
+        section: { type: string }
+        status: { type: string, enum: [draft, review, approved, published] }
+        schedule: { $ref: '#/components/schemas/Schedule' }
+        publishedAt: { type: string, format: date-time, nullable: true }
+        authorId: { type: string, nullable: true }
+    ContentCreate:
+      type: object
+      required: [title, body]
+      properties:
+        title: { type: string }
+        body: { type: string }
+        section: { type: string }
+        schedule: { $ref: '#/components/schemas/Schedule' }
+    ContentUpdate:
+      type: object
+      properties:
+        title: { type: string }
+        body: { type: string }
+        section: { type: string }
+        schedule: { $ref: '#/components/schemas/Schedule' }
+        action: { type: string, enum: [submit, approve, publish, unpublish] }
+    ContentPublic:
+      allOf:
+        - $ref: '#/components/schemas/Content'
+      properties:
+        status:
+          type: string
+          enum: [published]
+    Banner:
+      type: object
+      properties:
+        id: { type: string }
+        title: { type: string }
+        mediaUrl: { type: string }
+        linkUrl: { type: string }
+        position: { type: string }
+        order: { type: integer }
+        status: { type: string, enum: [draft, published] }
+        schedule: { $ref: '#/components/schemas/Schedule' }
+        publishedAt: { type: string, format: date-time, nullable: true }
+    BannerCreate:
+      type: object
+      required: [title, mediaUrl, position]
+      properties:
+        title: { type: string }
+        mediaUrl: { type: string }
+        linkUrl: { type: string }
+        position: { type: string }
+        order: { type: integer }
+        schedule: { $ref: '#/components/schemas/Schedule' }
+    BannerUpdate:
+      type: object
+      properties:
+        title: { type: string }
+        mediaUrl: { type: string }
+        linkUrl: { type: string }
+        position: { type: string }
+        order: { type: integer }
+        schedule: { $ref: '#/components/schemas/Schedule' }
+        action: { type: string, enum: [publish, unpublish] }
+    BannerPublic:
+      allOf:
+        - $ref: '#/components/schemas/Banner'
+      properties:
+        status:
+          type: string
+          enum: [published]
+    PreviewResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [article, banner]
+        item:
+          oneOf:
+            - $ref: '#/components/schemas/Content'
+            - $ref: '#/components/schemas/Banner'
+
