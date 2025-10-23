@@ -122,49 +122,49 @@ Notes
 - Dependencies: T013, T009, T014–T015
 - Agent Command Hint: apply_patch to implement endpoint making contract tests pass.
 
-[ ] T017 — Integration tests: scheduled banner visibility [P]
+[X] T017 — Integration tests: scheduled banner visibility [P]
 - Description: Given a banner scheduled in future/past/active windows, visibility toggles correctly via GET /cms/banners based on `now` (mock Date or inject now param for tests); overlapping banners resolve by publishAt then order.
 - Outputs: tests/integration/cms.banners.schedule.test.js
 - Paths: /Users/toy/Desktop/learn/AI/demo-api/tests/integration/
 - Dependencies: T015
 - Agent Command Hint: apply_patch to add Jest tests with supertest.
 
-[ ] T018 — Integration tests: preview access control [P]
+[X] T018 — Integration tests: preview access control [P]
 - Description: Without preview role header, /cms/preview/:type/:id returns 403; with editor/admin role returns 200 and draft content.
 - Outputs: tests/integration/cms.preview.auth.test.js
 - Paths: /Users/toy/Desktop/learn/AI/demo-api/tests/integration/
 - Dependencies: T016
 - Agent Command Hint: apply_patch to add Jest tests.
 
-[ ] T019 — Integration tests: workflow publishing
+[X] T019 — Integration tests: workflow publishing
 - Description: Draft → Review → Approved → Published transitions; after Published, GET public list shows the content; add audit entries.
 - Outputs: tests/integration/cms.workflow.test.js
 - Paths: /Users/toy/Desktop/learn/AI/demo-api/tests/integration/
 - Dependencies: T014
 - Agent Command Hint: apply_patch to add Jest tests.
 
-[ ] T020 — Observability: log CMS operations
+[X] T020 — Observability: log CMS operations
 - Description: Add structured logs for publish/unpublish and banner schedule changes; expose counters via existing observability module.
 - Outputs: src/observability/metrics.js (augmented), optional src/services/cms/logging.js; tests/observability/cms.metrics.test.js
 - Paths: /Users/toy/Desktop/learn/AI/demo-api/src/observability/metrics.js, /Users/toy/Desktop/learn/AI/demo-api/tests/observability/
 - Dependencies: T014–T016
 - Agent Command Hint: apply_patch to add metrics increments and tests.
 
-[ ] T021 — Documentation updates [P]
+[X] T021 — Documentation updates [P]
 - Description: Update quickstart.md with CMS endpoints and examples; update root README.md to mention CMS routes.
 - Outputs: specs/002-cms/quickstart.md (updated), README.md (updated)
 - Paths: /Users/toy/Desktop/learn/AI/demo-api/specs/002-cms/quickstart.md, /Users/toy/Desktop/learn/AI/demo-api/README.md
 - Dependencies: T014–T016
 - Agent Command Hint: apply_patch to update docs succinctly.
 
-[ ] T022 — Performance test scaffolding [P]
+[X] T022 — Performance test scaffolding [P]
 - Description: Add simple perf tests for /cms/banners and /cms/articles list endpoints; target P95 ≤ 500ms.
 - Outputs: tests/perf/cms.banners.perf.test.js, tests/perf/cms.articles.perf.test.js
 - Paths: /Users/toy/Desktop/learn/AI/demo-api/tests/perf/
 - Dependencies: T014–T015
 - Agent Command Hint: apply_patch to add perf test skeletons.
 
-[ ] T023 — Update agent context
+[X] T023 — Update agent context
 - Description: Run update script to capture CMS tech choices.
 - Command: `.specify/scripts/bash/update-agent-context.sh codex`
 - Dependencies: T002, T004–T006

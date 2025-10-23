@@ -5,6 +5,7 @@
 
 const statusEvents = new Map(); // id -> { eventTime, reflectedTime }
 const notificationEvents = new Map(); // id -> { startTime, handoffTime }
+const counters = new Map(); // name -> number
 
 function now() {
   return Date.now();
@@ -50,6 +51,17 @@ function getNotificationHandoffLatencyMs(id) {
 function resetAll() {
   statusEvents.clear();
   notificationEvents.clear();
+  counters.clear();
+}
+
+// Generic counters (for feature-specific metrics)
+function incCounter(name, amount = 1) {
+  const curr = counters.get(name) || 0;
+  counters.set(name, curr + amount);
+}
+
+function getCounter(name) {
+  return counters.get(name) || 0;
 }
 
 module.exports = {
@@ -61,7 +73,9 @@ module.exports = {
   startNotificationHandoff,
   markNotificationHandedOff,
   getNotificationHandoffLatencyMs,
+  // counters
+  incCounter,
+  getCounter,
   // utils
   resetAll,
 };
-

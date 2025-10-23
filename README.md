@@ -33,6 +33,15 @@ npm run dev
 - POST `/checkout` { shippingAddress, paymentMethod, items, totals }
 - GET `/orders/{orderId}`
  
+## Endpoints (CMS)
+- GET `/cms/articles` — list published, scheduled articles
+- POST `/cms/articles` — create draft article
+- PUT `/cms/articles/{id}` — update fields or apply workflow action `{ action: submit|approve|publish|unpublish }`
+- GET `/cms/banners` — list visible banners (sorted by publishedAt desc, then order desc)
+- POST `/cms/banners` — create draft banner
+- PUT `/cms/banners/{id}` — update fields or `{ action: publish|unpublish }`
+- GET `/cms/preview/{type}/{id}` — preview draft/review items (requires header `x-preview-role: editor|admin`)
+ 
 ## API Docs (Swagger)
 - UI: http://localhost:3000/api-docs
 - Spec: http://localhost:3000/openapi.json
@@ -64,6 +73,18 @@ npm run db:migrate
 ```
 
 Environment variables (optional): PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD
+
+### CMS store: memory vs database
+By default CMS uses an in-memory store suitable for tests and local development. To use Postgres:
+```
+export CMS_STORE=db
+npm run db:migrate   # ensures CMS tables exist
+npm start
+```
+Tables created:
+- `cms_articles(id, title, body, section, status, schedule_start, schedule_end, published_at, author_id, audit)`
+- `cms_banners(id, title, media_url, link_url, position, sort_order, status, schedule_start, schedule_end, published_at, audit)`
+- `cms_themes(id, name, config)`
 
 ### Performance indexes
 This repo includes a migration to add useful indexes and pg_trgm extension for substring email search:

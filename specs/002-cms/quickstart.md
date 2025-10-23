@@ -38,4 +38,15 @@ List visible banners:
 ```bash
 curl -s http://localhost:3000/cms/banners
 ```
+## Use Postgres for CMS (optional)
+
+By default, CMS uses an in-memory store. To persist CMS data in Postgres:
+
+```
+export CMS_STORE=db
+npm run db:migrate
+npm start
+```
+
+Ensure your PG env vars are set (see repo README).
 
