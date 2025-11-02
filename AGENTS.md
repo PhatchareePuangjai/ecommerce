@@ -1,43 +1,42 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- src: API and domain code
-  - src/api: Express app, routes, Swagger (`src/api/app.js`, `src/api/routes/*.js`)
-  - src/services: business logic (payments, inventory, CMS, etc.)
-  - src/models: lightweight data models/value objects
-  - src/db: migrations and DB bootstrap
-- tests: Jest tests
-  - tests/unit, tests/integration, tests/contract, tests/perf, tests/observability
-- docs: supplemental docs (e.g., `docs/a11y-checklist.md`)
+- `src/`: API and domain code
+  - `src/api/`: Express app, routes, Swagger (`src/api/app.js`, `src/api/routes/*.js`)
+  - `src/services/`: business logic (payments, inventory, CMS)
+  - `src/models/`: lightweight data models/value objects
+  - `src/db/`: migrations and DB bootstrap
+- `tests/`: Jest suites (`unit`, `integration`, `contract`, `perf`, `observability`)
+- `docs/`: supplemental docs (e.g., `docs/a11y-checklist.md`)
+- API runs on port `3000`; Swagger at `/api-docs`.
 
 ## Build, Test, and Development Commands
-- npm install: install dependencies
-- npm test: run all Jest tests
-- npm start: start API on port 3000 (Swagger at /api-docs)
-- npm run dev: start with auto-reload (nodemon)
-- npm run db:migrate: run database migrations
-- Perf example: `PORT=3000 node tests/perf/perf-runner.js`
+- `npm install`: Install dependencies.
+- `npm start`: Start the API on port `3000`.
+- `npm run dev`: Start with auto‑reload (nodemon).
+- `npm test`: Run all Jest tests.
+- `npm run db:migrate`: Run database migrations.
+- Perf smoke: `PORT=3000 node tests/perf/perf-runner.js`.
 
 ## Coding Style & Naming Conventions
-- Language: Node.js 20, Express 4, CommonJS (`require`/`module.exports`)
-- Indentation: 2 spaces; use semicolons
-- Naming: camelCase for variables/functions; PascalCase for classes
-- Files: keep lowercase, concise; follow existing patterns (`orders.js`, `store.memory.js`)
-- HTTP routes: define routers under `src/api/routes` and export `{ router }`
+- **Language**: Node.js 20, Express 4, CommonJS (`require`/`module.exports`).
+- **Indentation**: 2 spaces; always use semicolons.
+- **Naming**: camelCase for variables/functions; PascalCase for classes.
+- **Filenames**: lowercase, concise (e.g., `orders.js`, `store.memory.js`).
+- **Routes**: define under `src/api/routes` and export `{ router }`.
 
 ## Testing Guidelines
-- Framework: Jest 29 (`tests/**/*.test.js`)
-- Types: unit, integration, contract, perf, observability test suites
-- Add tests alongside feature changes; mock external services (Stripe, Shippo/carriers) with Jest
-- Run `npm test` locally; keep tests deterministic and fast
+- **Framework**: Jest 29; tests live under `tests/**/*.test.js`.
+- **Deterministic**: keep tests fast; avoid real network calls.
+- **Mocking**: mock external services (Stripe, Shippo/carriers) with Jest.
+- **Run**: `npm test`; add/update tests alongside feature changes.
 
 ## Commit & Pull Request Guidelines
-- Commits: use Conventional Commits when possible
-  - Examples: `feat(cms): add banner publishing`, `fix(orders): correct total rounding`
-- PRs: clear description, linked issues, test coverage, and any migration or env var notes
-  - Include sample requests or curl snippets for new endpoints; update README/Swagger as needed
+- **Commits**: use Conventional Commits (e.g., `feat(cms): add banner publishing`, `fix(orders): correct total rounding`).
+- **PRs**: include clear description, linked issues, test coverage/status, and any migration/env var notes. Update Swagger/README for new endpoints and include sample curl requests.
 
 ## Security & Configuration Tips
-- Never commit secrets; use environment variables (.env is git-ignored)
-- Common env vars: `STRIPE_API_KEY`, `SHIPPO_TOKEN` (or carrier-specific), `CMS_STORE`, `PG*`
-- Prefer sandbox/test keys and mocks in tests; avoid network calls in unit tests
+- Do not commit secrets; use environment variables (`.env` is git‑ignored).
+- Common env vars: `STRIPE_API_KEY`, `SHIPPO_TOKEN` (or carrier‑specific), `CMS_STORE`, `PG*`.
+- Prefer sandbox/test keys and mocks in tests; avoid real network access.
+
