@@ -1,4 +1,4 @@
-function requirePreviewRole(roles = ['editor', 'admin']) {
+function requirePreviewRole(roles = ['admin']) {
   return function (req, res, next) {
     const role = (req.headers['x-preview-role'] || '').toString();
     if (!role || !roles.includes(role)) {
@@ -9,4 +9,3 @@ function requirePreviewRole(roles = ['editor', 'admin']) {
 }
 
 module.exports = { requirePreviewRole };
-

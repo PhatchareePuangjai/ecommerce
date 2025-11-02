@@ -7,7 +7,7 @@ describe('Contract: CMS Preview', () => {
     const res403 = await request(app).get(url);
     expect([403, 404]).toContain(res403.status); // will fail until implemented
 
-    const res = await request(app).get(url).set('x-preview-role', 'editor');
+    const res = await request(app).get(url).set('x-preview-role', 'admin');
     expect([200, 404]).toContain(res.status); // will fail until implemented
     if (res.status === 200) {
       expect(res.body).toHaveProperty('type', 'article');
@@ -15,4 +15,3 @@ describe('Contract: CMS Preview', () => {
     }
   });
 });
-

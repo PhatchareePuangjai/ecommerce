@@ -28,10 +28,9 @@ describe('Integration: CMS Workflow publishing', () => {
     expect(ids).toContain(id);
 
     // Check audit trail exists via direct GET preview with role
-    const prev = await request(app).get(`/cms/preview/article/${id}`).set('x-preview-role', 'editor');
+    const prev = await request(app).get(`/cms/preview/article/${id}`).set('x-preview-role', 'admin');
     expect(prev.status).toBe(200);
     expect(Array.isArray(prev.body.item.audit)).toBe(true);
     expect(prev.body.item.audit.length).toBeGreaterThanOrEqual(1);
   });
 });
-

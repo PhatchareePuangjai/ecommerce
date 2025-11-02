@@ -12,10 +12,9 @@ describe('Integration: CMS Preview auth', () => {
     const noRole = await request(app).get(`/cms/preview/article/${id}`);
     expect(noRole.status).toBe(403);
 
-    const ok = await request(app).get(`/cms/preview/article/${id}`).set('x-preview-role', 'editor');
+    const ok = await request(app).get(`/cms/preview/article/${id}`).set('x-preview-role', 'admin');
     expect(ok.status).toBe(200);
     expect(ok.body).toHaveProperty('type', 'article');
     expect(ok.body).toHaveProperty('item.id', id);
   });
 });
-

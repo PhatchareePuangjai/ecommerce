@@ -54,4 +54,4 @@
 
 - [ ] CHK021 Is the mapping from the Default Policy Table to CMS workflow states and permissions unambiguous to avoid conflicting definitions? [Ambiguity, Spec §Acceptance Scenarios, Spec §Related Specs]
 - [ ] CHK022 Are ownership boundaries between the CMS spec and umbrella auth policies documented to prevent overlapping or conflicting requirements? [Conflict, Spec §Related Specs, Plan §Technical Context]
-
+- [ ] CHK023 Does a follow-up plan exist with 009-auth-profile and ops teams to implement preview tokenization and propagation SLA monitoring? [Dependencies, Spec §Dependencies & Assumptions, Research §Open Questions]

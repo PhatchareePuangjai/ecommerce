@@ -18,7 +18,7 @@ Notes
 - Agent Command Hint: apply_patch to add empty files and folder placeholders.
 
 [X] T002 — Author OpenAPI contracts for CMS endpoints
-- Description: Write OpenAPI 3.0 spec covering admin/editor and public endpoints: /cms/articles (GET, POST, PUT), /cms/banners (GET, POST, PUT), /cms/preview/{type}/{id} (GET). Include schemas (Content, Banner, Theme) and workflow/status fields, schedule windows (startAt/endAt UTC), and preview access notes.
+- Description: Write OpenAPI 3.0 spec covering admin and public endpoints: /cms/articles (GET, POST, PUT), /cms/banners (GET, POST, PUT), /cms/preview/{type}/{id} (GET). Include schemas (Content, Banner, Theme) and workflow/status fields, schedule windows (startAt/endAt UTC), and preview access notes.
 - Outputs: contracts/openapi.yaml with endpoints and components/schemas
 - Paths: /Users/toy/Desktop/learn/AI/demo-api/specs/002-cms/contracts/openapi.yaml
 - Dependency: T001
@@ -67,7 +67,7 @@ Notes
 - Agent Command Hint: apply_patch to add service and tests.
 
 [X] T009 — Implement CMS preview access middleware
-- Description: Middleware stub checking preview role; until 009-auth-profile, accept header `x-preview-role: editor|admin`. Reject others with 403. Export: requirePreviewRole(roles=['editor','admin']).
+- Description: Middleware stub checking preview role; until 009-auth-profile, accept header `x-preview-role: admin`. Reject others with 403. Export: requirePreviewRole(roles=['admin']).
 - Outputs: src/services/cms/previewAuth.js; unit tests in tests/unit/cms.previewAuth.test.js
 - Paths: /Users/toy/Desktop/learn/AI/demo-api/src/services/cms/previewAuth.js, /Users/toy/Desktop/learn/AI/demo-api/tests/unit/cms.previewAuth.test.js
 - Dependencies: T006
@@ -130,7 +130,7 @@ Notes
 - Agent Command Hint: apply_patch to add Jest tests with supertest.
 
 [X] T018 — Integration tests: preview access control [P]
-- Description: Without preview role header, /cms/preview/:type/:id returns 403; with editor/admin role returns 200 and draft content.
+- Description: Without preview role header, /cms/preview/:type/:id returns 403; with admin role returns 200 and draft content.
 - Outputs: tests/integration/cms.preview.auth.test.js
 - Paths: /Users/toy/Desktop/learn/AI/demo-api/tests/integration/
 - Dependencies: T016

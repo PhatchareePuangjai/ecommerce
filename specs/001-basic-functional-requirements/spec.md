@@ -100,7 +100,7 @@ A visitor can browse products by category, search and filter results, view produ
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
-- **FR-001 (CMS)**: System MUST allow admins to manage themes, home page banners, and content modules (articles/news), including scheduling and preview; content workflow: Draft → Review → Approved → Published; preview accessible to Admin and Content Editor.
+- **FR-001 (CMS)**: System MUST allow admins to manage themes, home page banners, and content modules (articles/news), including scheduling and preview; content workflow: Draft → Review → Approved → Published; preview accessible to Admin roles only.
 - **FR-002 (CMS)**: System MUST support a back-office interface for creating, editing, publishing, and unpublishing content.
 - **FR-003 (Catalog)**: System MUST present a browsable product catalog with categories up to 3 levels deep, including SEO fields (title, meta description, slug, canonical, noindex) and support for custom attributes.
 - **FR-004 (Catalog)**: System MUST provide a product detail page showing images, description, price, availability, and specifications; support variant options (e.g., size/color); allow up to 10 images and 2 videos per product.
@@ -135,7 +135,7 @@ A visitor can browse products by category, search and filter results, view produ
 ### Measurable Acceptance Criteria
 - **CMS**:
   - Given an unpublished article/banner, When it is published or reaches its schedule window, Then it becomes visible on public pages within 5 minutes and appears under the correct section; outside the window it is hidden; timestamps are stored in UTC and displayed in site locale.
-  - Given content in draft, When preview is used, Then only Admin and Content Editor can view it and it is not publicly visible.
+  - Given content in draft, When preview is used, Then only Admin roles can view it and it is not publicly visible.
 - **Catalog/PDP**:
   - Given categories with products, When a category page loads, Then products assigned to that category and its descendant categories are shown.
   - Given a product with images/variants, When PDP loads, Then at least 1 image renders, price shows with currency, availability displays clearly, and variant selection updates price/availability accordingly; up to 10 images and 2 videos supported.
@@ -192,7 +192,7 @@ A visitor can browse products by category, search and filter results, view produ
 | Area | Policy | Default |
 | --- | --- | --- |
 | CMS | Workflow | Draft → Review → Approved → Published |
-| CMS | Preview roles | Admin, Content Editor |
+| CMS | Preview roles | Admin |
 | CMS | Propagation time | ≤ 5 minutes (timestamps stored UTC; display in site locale) |
 | Catalog | Category depth | Up to 3 levels |
 | Catalog | Category pages include | Descendant products included |

@@ -40,7 +40,7 @@ npm run dev
 - GET `/cms/banners` — list visible banners (sorted by publishedAt desc, then order desc)
 - POST `/cms/banners` — create draft banner
 - PUT `/cms/banners/{id}` — update fields or `{ action: publish|unpublish }`
-- GET `/cms/preview/{type}/{id}` — preview draft/review items (requires header `x-preview-role: editor|admin`)
+- GET `/cms/preview/{type}/{id}` — preview draft/review items (requires header `x-preview-role: admin`)
  
 ## API Docs (Swagger)
 - UI: http://localhost:3000/api-docs

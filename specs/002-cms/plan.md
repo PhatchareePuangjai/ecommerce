@@ -29,7 +29,7 @@
 - Phase 3-4: Implementation execution (manual or via tools)
 
 ## Summary
-CMS feature enabling content authoring and presentation controls for site themes, banners, and articles/news with preview and scheduling. Follows umbrella defaults for preview access controls and propagation SLAs (≤ 5 minutes). Scope excludes product/catalog and checkout logic. Supports workflow Draft → Review → Approved → Published with audit trail and scheduling windows (UTC storage, localized display). Banner ordering and overlapping schedules resolve by most recent publish time.
+CMS feature enabling content authoring and presentation controls for site themes, banners, and articles/news with preview and scheduling. Follows umbrella defaults for preview access controls and propagation SLAs (≤ 5 minutes) and adds explicit monitoring/alert requirements. Scope excludes product/catalog and checkout logic. Supports workflow Draft → Review → Approved → Published with optional Archive, audit trail retention ≥18 months, and scheduling windows (UTC storage, locale-aware display). Banner ordering and overlapping schedules resolve by most recent publish time with `order` and stable ids as tie-breakers. Admins are the sole CMS operators; Visitors/Users consume published content only.
 
 ## Technical Context
 **Language/Version**: Node.js 20.x  
@@ -81,7 +81,7 @@ Output: research.md (CMS-specific) with critical NEEDS CLARIFICATION resolved or
 Prerequisites: research complete
 
 1. Define CMS entities from spec → `data-model.md` (Content, Banner, Theme; workflow states; schedule windows; audit trail).
-2. Generate API contracts for CMS endpoints (admin/editor and read-only public):
+2. Generate API contracts for CMS endpoints (admin and read-only public):
    - `POST/PUT/GET /cms/articles` (CRUD, workflow transitions, preview)
    - `POST/PUT/GET /cms/banners` (CRUD, ordering, scheduling)
    - `GET /cms/preview/:type/:id` (authorized preview)
@@ -98,7 +98,7 @@ Task Generation Strategy:
 - Each contract endpoint → contract test task [P]
 - Each entity → model creation task [P]
 - Workflow + scheduling services → service tasks with unit tests
-- Admin/editor vs public endpoints → separate implementation tasks
+- Admin vs public endpoints → separate implementation tasks
 
 Ordering Strategy:
 - TDD-first: contract tests before implementation
@@ -136,4 +136,3 @@ Fill if Constitution Check has violations requiring justification
 
 ---
 Based on Constitution (see `.specify/memory/constitution.md`) and umbrella defaults
-

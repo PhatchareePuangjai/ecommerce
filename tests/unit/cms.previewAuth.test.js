@@ -11,9 +11,8 @@ describe('CMS Preview Auth Middleware', () => {
     expect(res.status).toBe(403);
   });
 
-  test('200 with editor role', async () => {
-    const res = await request(app).get('/preview').set('x-preview-role', 'editor');
+  test('200 with admin role', async () => {
+    const res = await request(app).get('/preview').set('x-preview-role', 'admin');
     expect(res.status).toBe(200);
   });
 });
-
