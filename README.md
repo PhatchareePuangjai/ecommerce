@@ -41,7 +41,19 @@ npm run dev
 - POST `/cms/banners` — create draft banner
 - PUT `/cms/banners/{id}` — update fields or `{ action: publish|unpublish }`
 - GET `/cms/preview/{type}/{id}` — preview draft/review items (requires header `x-preview-role: admin`)
- 
+
+## Endpoints (Auth & Profile)
+- POST `/auth/register` — create account (password policy enforced)
+- POST `/auth/verify` — confirm email using verification token
+- POST `/auth/login` — obtain access token (`Authorization: Bearer <token>`)
+- POST `/auth/logout` — revoke current session
+- POST `/auth/password/forgot` — issue reset token (always `202 Accepted`)
+- POST `/auth/password/reset` — submit new password with reset token
+- GET `/profile` — fetch authenticated profile + addresses
+- PUT `/profile` — update first/last name and default payment token
+- POST `/profile/addresses` — add shipping address (max 5, enforces default flag)
+- DELETE `/profile/addresses/{addressId}` — remove saved address
+
 ## API Docs (Swagger)
 - UI: http://localhost:3000/api-docs
 - Spec: http://localhost:3000/openapi.json

@@ -7,6 +7,13 @@ const statusEvents = new Map(); // id -> { eventTime, reflectedTime }
 const notificationEvents = new Map(); // id -> { startTime, handoffTime }
 const counters = new Map(); // name -> number
 
+const AUTH_LOGIN_SUCCESS = 'auth.login.success';
+const AUTH_LOGIN_FAILURE = 'auth.login.failure';
+const AUTH_LOCKOUT = 'auth.lockout.triggered';
+const AUTH_RESET_REQUESTED = 'auth.reset.requested';
+const AUTH_RESET_COMPLETED = 'auth.reset.completed';
+const AUTH_RESET_FAILED = 'auth.reset.failed';
+
 function now() {
   return Date.now();
 }
@@ -64,6 +71,31 @@ function getCounter(name) {
   return counters.get(name) || 0;
 }
 
+// Auth-specific helpers
+function recordAuthLoginSuccess() {
+  incCounter(AUTH_LOGIN_SUCCESS);
+}
+
+function recordAuthLoginFailure() {
+  incCounter(AUTH_LOGIN_FAILURE);
+}
+
+function recordAuthLockout() {
+  incCounter(AUTH_LOCKOUT);
+}
+
+function recordAuthResetRequested() {
+  incCounter(AUTH_RESET_REQUESTED);
+}
+
+function recordAuthResetCompleted() {
+  incCounter(AUTH_RESET_COMPLETED);
+}
+
+function recordAuthResetFailed() {
+  incCounter(AUTH_RESET_FAILED);
+}
+
 module.exports = {
   // status
   startStatusEvent,
@@ -78,4 +110,11 @@ module.exports = {
   getCounter,
   // utils
   resetAll,
+  // auth helpers
+  recordAuthLoginSuccess,
+  recordAuthLoginFailure,
+  recordAuthLockout,
+  recordAuthResetRequested,
+  recordAuthResetCompleted,
+  recordAuthResetFailed,
 };
