@@ -35,8 +35,19 @@ function createProfileService({ store, clock = () => new Date() } = {}) {
         updates.defaultPaymentTokenId = payload.defaultPaymentTokenId;
       }
 
-      await store.updateProfile(userId, updates);
-      return this.getProfile(userId);
+      const updated = await store.updateProfile(userId, updates);
+      if (!updated) return null;
+
+      const addresses = await store.listAddresses(userId);
+      return {
+        id: updated.id,
+        email: updated.email,
+        firstName: updated.firstName,
+        lastName: updated.lastName,
+        isVerified: updated.isVerified,
+        defaultPaymentTokenId: updated.defaultPaymentTokenId,
+        addresses
+      };
     },
 
     async addAddress(userId, payload) {

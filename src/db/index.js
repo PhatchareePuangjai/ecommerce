@@ -104,6 +104,17 @@ if (process.env.NODE_ENV === 'test' || process.env.JEST_WORKER_ID !== undefined)
       row.updated_at = updatedAt.toISOString();
       return { rows: [clone(row)] };
     }
+    if (sql.startsWith('update auth_users') && sql.includes('set first_name')) {
+      const [id, firstName, lastName, defaultPaymentTokenId, updatedAt] = params;
+      const row = memory.auth_users.find((u) => u.id === id);
+      if (!row) return { rows: [] };
+      row.first_name = firstName;
+      row.last_name = lastName;
+      row.default_payment_token_id =
+        defaultPaymentTokenId === undefined ? row.default_payment_token_id : defaultPaymentTokenId;
+      row.updated_at = updatedAt.toISOString();
+      return { rows: [clone(row)] };
+    }
     if (sql.startsWith('update auth_users') && sql.includes('set password_hash')) {
       const [id, passwordHash, updatedAt] = params;
       const row = memory.auth_users.find((u) => u.id === id);
